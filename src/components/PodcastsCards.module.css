@@ -1,0 +1,20 @@
+.Card {
+  flex: 1 0 20%;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.Title {
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.Author {
+  font-size: 0.8rem;
+}
+
+.Image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+}
