@@ -13,23 +13,27 @@ module.exports = {
     }),
   ],
   module: {
-    // exclude node_modules
     rules: [
       {
         test: /\.(js)$/,
         exclude: /node_modules/,
         use: ["babel-loader"],
       },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
-  // pass all js files through Babel
   resolve: {
-    extensions: ["*", ".js", ".jsx"],
+    extensions: ["*", ".js", ".jsx", ".css"],
   },
   devServer: {
     static: {
       directory: path.join(__dirname, "build"),
     },
+    open: true,
     port: 3000,
+    historyApiFallback: true,
   }
 };
