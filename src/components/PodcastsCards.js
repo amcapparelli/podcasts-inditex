@@ -8,9 +8,11 @@ function PodcastsCards({ podcast }) {
   const image = podcast["im:image"][2].label;
   return (
     <div className={styles.Card}>
-      <img src={image} className={styles.Image} />
-      <h2 className={styles.Title}>{title.label.toUpperCase()}</h2>
-      <p className={styles.Author}>AUTHOR: {author}</p>
+      <img src={image} />
+      <div className={styles.Text}>
+        <h2>{title.label.toUpperCase()}</h2>
+        <p>AUTHOR: {author}</p>
+      </div>
     </div>
   );
 

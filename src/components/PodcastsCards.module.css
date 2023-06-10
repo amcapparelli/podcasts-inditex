@@ -1,20 +1,38 @@
 .Card {
   flex: 1 0 20%;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  height: 250px;
+  margin-top: 100px;
+  position: relative;
 }
 
-.Title {
+.Text {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.Text h2 {
   font-size: 1rem;
   font-weight: 900;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
 }
 
-.Author {
+.Text p {
   font-size: 0.8rem;
 }
 
-.Image {
+.Card img {
   width: 200px;
   height: 200px;
   border-radius: 50%;
   overflow: hidden;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -30%);
 }
