@@ -3,16 +3,19 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from "react-query";
 
 import { getPodcastDetail } from '../../utils/api/getPodcasts';
-import { PodcastInfo } from "../../components";
+import { PodcastInfo, Spinner } from "../../components";
 
 import styles from './EpisodeDetail.module.css';
 
 
 function EpisodeDetail() {
   const { podcastId, episodeId } = useParams();
-  const { data, status } = useQuery(['podcastDetail', { id: podcastId }], () => getPodcastDetail(podcastId), {
+  const { data, status, error } = useQuery(['podcastDetail', { id: podcastId }], () => getPodcastDetail(podcastId), {
     cacheTime: 86400000, // 24 hours in milliseconds
   });
+  if (error) {
+    console.log(`[Error en Episode/episodeId:${episodeId}]`, error);
+  }
   const image = data?.results[0].artworkUrl100;
   const description = data?.results[0].collectionName;
   const episode = data?.results.find(episode => episode.trackId === Number(episodeId));
@@ -20,6 +23,7 @@ function EpisodeDetail() {
 
   return (
     <div className={styles.EpisodeContainer}>
+      <Spinner loading={status === "loading"} />
       <PodcastInfo image={image} description={description} />
       <div className={styles.Episode}>
         <span dangerouslySetInnerHTML={{ __html: episodeDescription }} />

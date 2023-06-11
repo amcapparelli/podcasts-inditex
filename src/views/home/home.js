@@ -3,16 +3,18 @@ import { useQuery } from "react-query";
 
 import { getPodcasts } from '../../utils/api/getPodcasts';
 import { getFilteredPodcasts } from "../../utils/getFilteredPodcasts";
-import { PodcastsCards, Search } from "../../components";
+import { PodcastsCards, Search, Spinner } from "../../components";
 import styles from './Home.module.css';
 
 
 function Home() {
-  const { data, status } = useQuery('podcasts', getPodcasts, {
+  const { data, status, error } = useQuery('podcasts', getPodcasts, {
     cacheTime: 86400000, // 24 hours in milliseconds
   });
+  if (error) {
+    console.log("[Error en Home]", error)
+  }
   const [input, setInput] = useState("");
-
   const podcasts = data?.feed.entry;
   const handleInputSearchChange = (e) => {
     const { value } = e.target;
@@ -24,6 +26,7 @@ function Home() {
 
   return (
     <div>
+      <Spinner loading={status === "loading"} />
       <Search
         handleChange={handleInputSearchChange}
         input={input}
