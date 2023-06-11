@@ -1,5 +1,5 @@
 .PodcastsContainer {
-  margin: 0 auto;
+  margin: 0 5%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;

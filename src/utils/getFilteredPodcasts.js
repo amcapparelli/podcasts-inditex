@@ -3,7 +3,10 @@ export const getFilteredPodcasts = (podcasts, input) => {
   const filteredPodcasts = podcasts.filter(podcast => podcast.title.label
     .toLowerCase()
     .includes(input.toLowerCase())
+    || podcast["im:artist"].label
+      .toLowerCase()
+      .includes(input.toLowerCase())
   );
-  console.log("***", filteredPodcasts)
+
   return filteredPodcasts;
 }

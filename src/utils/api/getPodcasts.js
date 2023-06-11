@@ -6,7 +6,7 @@ export const getPodcasts = async () => {
 }
 
 export const getPodcastDetail = async (podcastId) => {
-  const urlWithParams = `${PODCAST_DETAIL}?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`
+  const urlWithParams = `${PODCAST_DETAIL}?id=${podcastId}&media=podcast&entity=podcastEpisode`
   const podcast = await fetch(urlWithParams);
   return podcast.json();
 }
