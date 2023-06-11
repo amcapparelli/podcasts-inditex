@@ -1,9 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const PodcastDetailListTable = ({ podcastContentList }) => {
+const PodcastEpisodeListTable = ({ podcastContentList }) => {
+  const navigate = useNavigate();
+  if (!podcastContentList?.length) return;
+
   const getFormattedDate = (ISODate) => {
     const date = new Date(ISODate);
-    console.log("***", ISODate)
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
@@ -17,7 +20,10 @@ const PodcastDetailListTable = ({ podcastContentList }) => {
 
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }
-  if (!podcastContentList?.length) return;
+  const handleClick = (podcastId, episodeId) => {
+    navigate(`/podcast/${podcastId}/episode/${episodeId}`);
+  }
+
   return (
     <table>
       <tbody>
@@ -26,14 +32,16 @@ const PodcastDetailListTable = ({ podcastContentList }) => {
           <th>Date</th>
           <th>Duration</th>
         </tr>
-        {podcastContentList?.map(podcast => <tr key={podcast.title}>
-          <td>{podcast.title}</td>
-          <td>{getFormattedDate(podcast.date)}</td>
-          <td>{formatMilliseconds(podcast.duration)}</td>
-        </tr>)}
+        {podcastContentList?.map(podcast => (
+          <tr key={podcast.title} onClick={() => handleClick(podcast.podcastId, podcast.trackId)}>
+            <td>{podcast.title}</td>
+            <td>{getFormattedDate(podcast.date)}</td>
+            <td>{formatMilliseconds(podcast.duration)}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
 }
 
-export default PodcastDetailListTable;
+export default PodcastEpisodeListTable;

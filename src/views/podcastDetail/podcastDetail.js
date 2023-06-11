@@ -3,9 +3,8 @@ import { useQuery } from "react-query";
 import { useParams } from 'react-router-dom';
 
 import { getPodcastDetail } from '../../utils/api/getPodcasts';
-import { PodcastDetailListTable } from "../../components";
+import { PodcastEpisodeListTable, PodcastInfo } from "../../components";
 import styles from './PodcastDetail.module.css';
-
 
 
 function PodcastDetail() {
@@ -20,23 +19,21 @@ function PodcastDetail() {
     return {
       title: data.trackName,
       date: data.releaseDate,
-      duration: data.trackTimeMillis
+      duration: data.trackTimeMillis,
+      trackId: data.trackId,
+      podcastId
     }
   });
 
   return (
     <div className={styles.PodcastDetailContainer}>
-      <div className={styles.PodcastGeneraInfo}>
-        <img src={image} />
-        <h3>Description: </h3>
-        <p>{description}</p>
-      </div>
+      <PodcastInfo image={image} description={description} />
       <div className={styles.EpisodesListContainer}>
         <div className={styles.EpisodesNumber}>
           <span>Episodes: {trackCount}</span>
         </div>
         <div className={styles.EpisodesList}>
-          <PodcastDetailListTable podcastContentList={podcastContentList} />
+          <PodcastEpisodeListTable podcastContentList={podcastContentList} />
         </div>
       </div>
     </div>
