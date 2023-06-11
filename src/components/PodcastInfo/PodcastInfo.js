@@ -1,12 +1,18 @@
 import styles from './PodcastInfo.module.css';
 
 
-const PodcastInfo = ({ image, description }) => {
+const PodcastInfo = ({ image, title, artist, description }) => {
   return (
-    <div className={styles.PodcastGeneraInfo}>
+    <div className={styles.PodcastGeneraInfoContainer}>
       <img src={image} />
-      <h3>Description: </h3>
-      <p>{description}</p>
+      <div className={styles.PodcastGeneraInfoText}>
+        <h3>{title}</h3>
+        <p>by {artist}</p>
+      </div>
+      <div className={styles.PodcastGeneraInfoText}>
+        <h3>Description: </h3>
+        <p>{description}</p>
+      </div>
     </div>
   )
 };

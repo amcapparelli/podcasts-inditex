@@ -13,9 +13,10 @@ function Home() {
   });
   if (error) {
     console.log("[Error en Home]", error)
-  }
+  };
   const [input, setInput] = useState("");
   const podcasts = data?.feed.entry;
+  localStorage.setItem('podcasts', JSON.stringify(podcasts));
   const handleInputSearchChange = (e) => {
     const { value } = e.target;
     setInput(value);
