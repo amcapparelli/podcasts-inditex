@@ -3,15 +3,18 @@ import { useQuery } from "react-query";
 import { useParams } from 'react-router-dom';
 
 import { getPodcastDetail } from '../../utils/api/getPodcasts';
-import { PodcastEpisodeListTable, PodcastInfo } from "../../components";
+import { PodcastEpisodeListTable, PodcastInfo, Spinner } from "../../components";
 import styles from './PodcastDetail.module.css';
 
 
 function PodcastDetail() {
   let { podcastId } = useParams();
-  const { data, status } = useQuery(['podcastDetail', { id: podcastId }], () => getPodcastDetail(podcastId), {
+  const { data, status, error } = useQuery(['podcastDetail', { id: podcastId }], () => getPodcastDetail(podcastId), {
     cacheTime: 86400000, // 24 hours in milliseconds
   });
+  if (error) {
+    console.log(`[Error en Podcast/podcastId:${podcastId}]`, error);
+  }
   const image = data?.results[0].artworkUrl100;
   const description = data?.results[0].collectionName;
   const trackCount = data?.results[0].trackCount;
@@ -27,6 +30,7 @@ function PodcastDetail() {
 
   return (
     <div className={styles.PodcastDetailContainer}>
+      <Spinner loading={status === "loading"} />
       <PodcastInfo image={image} description={description} />
       <div className={styles.EpisodesListContainer}>
         <div className={styles.EpisodesNumber}>
