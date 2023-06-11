@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 
-import { getPodcasts } from '../utils/api/getPodcasts';
-import { getFilteredPodcasts } from "../utils/getFilteredPodcasts";
-import { PodcastsCards, Search } from "../components";
+import { getPodcasts } from '../../utils/api/getPodcasts';
+import { getFilteredPodcasts } from "../../utils/getFilteredPodcasts";
+import { PodcastsCards, Search } from "../../components";
 import styles from './Home.module.css';
 
 
