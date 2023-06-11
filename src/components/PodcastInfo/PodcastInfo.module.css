@@ -1,4 +1,4 @@
-.PodcastGeneraInfo {
+.PodcastGeneraInfoContainer {
   flex: 1 0 20%;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   height: 400px;
@@ -9,6 +9,22 @@
   text-align: center;
 }
 
-.PodcastGeneraInfo img {
+.PodcastGeneraInfoContainer img {
   padding-top: 50px;
+}
+
+.PodcastGeneraInfoText {
+  text-align: left;
+  border-bottom: 0.1rem solid lightgrey;
+}
+
+.PodcastGeneraInfoText p,
+h3 {
+  width: 90%;
+  padding-left: 10px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
 }

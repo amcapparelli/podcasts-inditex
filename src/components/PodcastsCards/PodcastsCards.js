@@ -7,7 +7,7 @@ import styles from './PodcastsCards.module.css';
 function PodcastsCards({ podcast }) {
   const navigate = useNavigate();
 
-  const { title } = podcast;
+  const title = podcast["im:name"].label;
   const author = podcast["im:artist"].label;
   const image = podcast["im:image"][2].label;
   const podcastId = podcast.id.attributes["im:id"];
@@ -18,7 +18,7 @@ function PodcastsCards({ podcast }) {
     <div className={styles.Card} onClick={handleClick}>
       <img src={image} />
       <div className={styles.Text}>
-        <h2>{title.label.toUpperCase()}</h2>
+        <h2>{title.toUpperCase()}</h2>
         <p>AUTHOR: {author}</p>
       </div>
     </div>

@@ -5,6 +5,8 @@ const PodcastEpisodeListTable = ({ podcastContentList }) => {
   const navigate = useNavigate();
   if (!podcastContentList?.length) return;
 
+  const [firstEpisode, ...restEpisodes] = podcastContentList;
+
   const getFormattedDate = (ISODate) => {
     const date = new Date(ISODate);
     const day = date.getDate();
@@ -32,7 +34,7 @@ const PodcastEpisodeListTable = ({ podcastContentList }) => {
           <th>Date</th>
           <th>Duration</th>
         </tr>
-        {podcastContentList?.map(podcast => (
+        {restEpisodes?.map(podcast => (
           <tr key={podcast.title} onClick={() => handleClick(podcast.podcastId, podcast.trackId)}>
             <td>{podcast.title}</td>
             <td>{getFormattedDate(podcast.date)}</td>

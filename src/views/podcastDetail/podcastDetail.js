@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import { useParams } from 'react-router-dom';
 
+import { getPodcastContent } from '../../utils/getPodcastContent';
 import { getPodcastDetail } from '../../utils/api/getPodcasts';
 import { PodcastEpisodeListTable, PodcastInfo, Spinner } from "../../components";
 import styles from './PodcastDetail.module.css';
@@ -15,9 +16,9 @@ function PodcastDetail() {
   if (error) {
     console.log(`[Error en Podcast/podcastId:${podcastId}]`, error);
   }
-  const image = data?.results[0].artworkUrl100;
-  const description = data?.results[0].collectionName;
-  const trackCount = data?.results[0].trackCount;
+  if (data === undefined) return;
+  const podcast = data.results[0];
+  const { image, title, artist, trackCount, description } = getPodcastContent(podcast, podcastId);
   const podcastContentList = data?.results.map((data) => {
     return {
       title: data.trackName,
@@ -31,7 +32,12 @@ function PodcastDetail() {
   return (
     <div className={styles.PodcastDetailContainer}>
       <Spinner loading={status === "loading"} />
-      <PodcastInfo image={image} description={description} />
+      <PodcastInfo
+        image={image}
+        title={title}
+        artist={artist}
+        description={description}
+      />
       <div className={styles.EpisodesListContainer}>
         <div className={styles.EpisodesNumber}>
           <span>Episodes: {trackCount}</span>
