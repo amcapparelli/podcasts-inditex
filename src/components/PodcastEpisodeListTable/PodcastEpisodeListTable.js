@@ -1,8 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const PodcastEpisodeListTable = ({ podcastContentList }) => {
-  const navigate = useNavigate();
   if (!podcastContentList?.length) return;
 
   const [firstEpisode, ...restEpisodes] = podcastContentList;
@@ -22,9 +21,6 @@ const PodcastEpisodeListTable = ({ podcastContentList }) => {
 
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }
-  const handleClick = (podcastId, episodeId) => {
-    navigate(`/podcast/${podcastId}/episode/${episodeId}`);
-  }
 
   return (
     <table>
@@ -35,8 +31,8 @@ const PodcastEpisodeListTable = ({ podcastContentList }) => {
           <th>Duration</th>
         </tr>
         {restEpisodes?.map(podcast => (
-          <tr key={podcast.title} onClick={() => handleClick(podcast.podcastId, podcast.trackId)}>
-            <td>{podcast.title}</td>
+          <tr key={podcast.title}>
+            <td><Link to={`/podcast/${podcast.podcastId}/episode/${podcast.trackId}`}>{podcast.title}</Link></td>
             <td>{getFormattedDate(podcast.date)}</td>
             <td>{formatMilliseconds(podcast.duration)}</td>
           </tr>
