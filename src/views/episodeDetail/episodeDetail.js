@@ -11,26 +11,25 @@ import styles from './EpisodeDetail.module.css';
 
 function EpisodeDetail() {
   const { podcastId, episodeId } = useParams();
-  const { data, status, error } = useQuery(['podcastDetail', { id: podcastId }], () => getPodcastDetail(podcastId), {
+  const { data, isLoading, error } = useQuery(['podcastDetail', { id: podcastId }], () => getPodcastDetail(podcastId), {
     cacheTime: 86400000, // 24 hours in milliseconds
   });
   if (error) {
     console.log(`[Error en Episode/episodeId:${episodeId}]`, error);
   }
-  if (data === undefined) return;
-  const podcast = data.results[0];
-  const { image, title, artist, description } = getPodcastContent(podcast, podcastId);
-  const episode = data.results.find(episode => episode.trackId === Number(episodeId));
+  const podcast = data?.results[0];
+  const podcastContent = getPodcastContent(podcast, podcastId);
+  const episode = data?.results.find(episode => episode.trackId === Number(episodeId));
   const episodeDescription = episode.description;
 
   return (
     <div className={styles.EpisodeContainer}>
-      <Spinner loading={status === "loading"} />
+      <Spinner loading={isLoading} />
       <PodcastInfo
-        image={image}
-        title={title}
-        artist={artist}
-        description={description}
+        image={podcastContent.image}
+        title={podcastContent.title}
+        artist={podcastContent.artist}
+        description={podcastContent.description}
       />
       <div className={styles.Episode}>
         <span dangerouslySetInnerHTML={{ __html: episodeDescription }} />

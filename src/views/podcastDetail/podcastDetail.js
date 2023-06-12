@@ -10,15 +10,14 @@ import styles from './PodcastDetail.module.css';
 
 function PodcastDetail() {
   let { podcastId } = useParams();
-  const { data, status, error } = useQuery(['podcastDetail', { id: podcastId }], () => getPodcastDetail(podcastId), {
+  const { data, isLoading, error } = useQuery(['podcastDetail', { id: podcastId }], () => getPodcastDetail(podcastId), {
     cacheTime: 86400000, // 24 hours in milliseconds
   });
   if (error) {
     console.log(`[Error en Podcast/podcastId:${podcastId}]`, error);
   }
-  if (data === undefined) return;
-  const podcast = data.results[0];
-  const { image, title, artist, trackCount, description } = getPodcastContent(podcast, podcastId);
+  const podcast = data?.results[0];
+  const podcastContent = getPodcastContent(podcast, podcastId);
   const podcastContentList = data?.results.map((data) => {
     return {
       title: data.trackName,
@@ -31,21 +30,26 @@ function PodcastDetail() {
 
   return (
     <div className={styles.PodcastDetailContainer}>
-      <Spinner loading={status === "loading"} />
-      <PodcastInfo
-        image={image}
-        title={title}
-        artist={artist}
-        description={description}
-      />
-      <div className={styles.EpisodesListContainer}>
-        <div className={styles.EpisodesNumber}>
-          <span>Episodes: {trackCount}</span>
-        </div>
-        <div className={styles.EpisodesList}>
-          <PodcastEpisodeListTable podcastContentList={podcastContentList} />
-        </div>
-      </div>
+      <Spinner loading={isLoading} />
+      {
+        podcast &&
+        <>
+          <PodcastInfo
+            image={podcastContent.image}
+            title={podcastContent.title}
+            artist={podcastContent.artist}
+            description={podcastContent.description}
+          />
+          <div className={styles.EpisodesListContainer}>
+            <div className={styles.EpisodesNumber}>
+              <span>Episodes: {podcastContent.trackCount}</span>
+            </div>
+            <div className={styles.EpisodesList}>
+              <PodcastEpisodeListTable podcastContentList={podcastContentList} />
+            </div>
+          </div>
+        </>
+      }
     </div>
 
   );
