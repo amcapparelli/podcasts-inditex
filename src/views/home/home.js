@@ -8,7 +8,7 @@ import styles from './Home.module.css';
 
 
 function Home() {
-  const { data, status, error } = useQuery('podcasts', getPodcasts, {
+  const { data, isLoading, error } = useQuery('podcasts', getPodcasts, {
     cacheTime: 86400000, // 24 hours in milliseconds
   });
   if (error) {
@@ -27,7 +27,7 @@ function Home() {
 
   return (
     <div>
-      <Spinner loading={status === "loading"} />
+      <Spinner loading={isLoading} />
       <Search
         handleChange={handleInputSearchChange}
         input={input}
